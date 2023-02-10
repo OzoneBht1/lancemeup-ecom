@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import loginAvatar from "./loginAvatar.png";
 import { ILoginData } from "../types/types";
 
 interface ILoginForm {
   onReceiveLoginData: ({ email, password }: ILoginData) => void;
+  error: string | null;
+  resetSubmissionError: () => void;
 }
 
-const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
-  const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
+const LoginForm = ({
+  onReceiveLoginData,
+  error,
+  resetSubmissionError,
+}: ILoginForm) => {
+  console.log(error);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const [passwordInvalid, setPasswordInvalid] = React.useState(false);
+  // state for managing interactivity of password input
+
+  useEffect(() => {
+    if (password.length > 0 && password.length < 6) {
+      setPasswordInvalid(true);
+    } else {
+      setPasswordInvalid(false);
+    }
+    if (error) {
+      setPasswordInvalid(true);
+    }
+  }, [password, error]);
 
   const [formValidity, setFormValidity] = React.useState({
     email: true,
@@ -16,6 +37,7 @@ const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
   });
 
   const setFormToValid = () => {
+    resetSubmissionError();
     console.log("CALLING");
     setFormValidity({
       email: true,
@@ -25,8 +47,6 @@ const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
 
     const emailIsValid = !!email && email!.includes("@");
     const passwordIsValid = !!password && password!.trim().length > 6;
@@ -48,10 +68,13 @@ const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
 
   const labelClassName = "text-gray-700";
   const emailInputClassName =
-    "mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500";
+    "mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500   invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500";
 
-  const passwordInputClassName =
-    "mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500";
+  const passwordInputClassName = `mt-1 block w-full px-3 py-2 bg-white border rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:ring-1 ${
+    passwordInvalid
+      ? "border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 "
+      : "focus:border-sky-500  focus:ring-sky-500"
+  }`;
 
   return (
     <form onSubmit={submitHandler}>
@@ -66,8 +89,9 @@ const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
         <input
           className={emailInputClassName}
           type="email"
-          ref={emailRef}
-          onKeyDown={(e) => setFormToValid()}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={() => setFormToValid()}
         />
         {formValidity.email ? null : (
           <p className="text-red-500">Please enter a valid email</p>
@@ -78,12 +102,14 @@ const LoginForm = ({ onReceiveLoginData }: ILoginForm) => {
         <input
           className={passwordInputClassName}
           type="password"
-          ref={passwordRef}
-          onKeyDown={(e) => setFormToValid()}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={() => setFormToValid()}
         />
         {formValidity.password ? null : (
           <p className="text-red-500">Please enter a valid password</p>
         )}
+        {error ? <p className="text-red-500">{error}</p> : null}
         <button
           type="submit"
           className="px-3 py-2 mt-4 bg-purple-400 text-white rounded "
