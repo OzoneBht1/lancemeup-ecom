@@ -1,8 +1,12 @@
 export interface IUser {
   username: string;
   email: string;
-  password: string;
+  image: string;
   user_type: string;
+}
+
+export interface IUserJsonData extends IUser {
+  password: string;
 }
 
 export interface ILoginData {

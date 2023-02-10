@@ -3,24 +3,28 @@
     "username": "admin1",
     "email": "admin1@example.com",
     "password": "$2a$10$86J1Nozk73XJTYHMRTtBde.TwWXyxGPVPQEvan4PltOnuArQj3jFa",
+    "image": "https://i.pravatar.cc/400",
     "user_type": "admin"
   },
   {
     "username": "admin2",
     "email": "admin2@example.com",
     "password": "$2a$10$86J1Nozk73XJTYHMRTtBde0q6XXGN/hlqFNruaX/OYpyfhoLOUwzu",
+    "image": "https://i.pravatar.cc/500",
     "user_type": "admin"
   },
   {
     "username": "user1",
     "email": "user1@example.com",
     "password": "$2a$10$86J1Nozk73XJTYHMRTtBdeYYY5WNgohRV8dFWByBl/JJXjWAYpXNa",
+    "image": "https://i.pravatar.cc/600",
     "user_type": "user"
   },
   {
     "username": "user2",
     "email": "user2@example.com",
     "password": "$2a$10$86J1Nozk73XJTYHMRTtBdeDPnKxQWdYLCW.X5rffhKSfwEbsKdRG2",
+    "image": "https://i.pravatar.cc/800",
     "user_type": "user"
   }
 ]

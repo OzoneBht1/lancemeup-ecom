@@ -2,9 +2,11 @@ import React from "react";
 import LoginForm from "../components/LoginForm";
 import bcrypt from "bcryptjs";
 import { secret } from "../components/secret-pass";
-import { ILoginData, IUser } from "../types/types";
+import { ILoginData, IUser, IUserJsonData } from "../types/types";
 import userData from "../data/dummyUsers.json";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../store/hooks";
+import { setUser } from "../store/slices/usersSlice";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, secret);
@@ -13,18 +15,29 @@ const hashPassword = async (password: string) => {
 };
 
 const Login = () => {
-  const nav = useNavigate();
   const [error, setError] = React.useState<string | null>(null);
+  const nav = useNavigate();
+  const dispatch = useAppDispatch();
 
   const formSubmissionHandler = async (data: ILoginData) => {
     const { email, password } = data;
     const hashedPassword = await hashPassword(password);
     const user = userData.find(
-      (user: IUser) => user.email === email && user.password === hashedPassword
+      (user: IUserJsonData) =>
+        user.email === email && user.password === hashedPassword
     );
     // TODO: Dispatch action to store user data
     if (user) {
-      nav("/home");
+      dispatch(
+        setUser({
+          username: user.username,
+          email: user.email,
+          image: user.image,
+          user_type: user.user_type,
+        } as IUser)
+      );
+      // TODO: Use LocalStorage hook to store data
+      nav("/");
     } else {
       setError("Invalid email or password");
     }
@@ -35,7 +48,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-200">
+    <div className="flex items-center justify-center h-screen-minus-navbar bg-gray-200">
       <LoginForm
         onReceiveLoginData={formSubmissionHandler}
         error={error}

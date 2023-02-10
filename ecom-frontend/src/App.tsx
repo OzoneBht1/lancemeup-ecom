@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* <UserNavbar /> */}
+        <UserNavbar />
         <Routes>
           <Route path="/" element={<Home />} loader={Loader} />
           <Route path="/login" element={<Login />} />
