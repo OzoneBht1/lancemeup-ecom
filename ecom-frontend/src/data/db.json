@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin1",
+      "email": "admin1@example.com",
+      "password": "$2a$10$86J1Nozk73XJTYHMRTtBde.TwWXyxGPVPQEvan4PltOnuArQj3jFa",
+      "image": "https://i.pravatar.cc/400",
+      "user_type": "admin"
+    },
+    {
+      "id": 2,
+      "username": "admin2",
+      "email": "admin2@example.com",
+      "password": "$2a$10$86J1Nozk73XJTYHMRTtBde0q6XXGN/hlqFNruaX/OYpyfhoLOUwzu",
+      "image": "https://i.pravatar.cc/500",
+      "user_type": "admin"
+    },
+    {
+      "id": 3,
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "$2a$10$86J1Nozk73XJTYHMRTtBdeYYY5WNgohRV8dFWByBl/JJXjWAYpXNa",
+      "image": "https://i.pravatar.cc/600",
+      "user_type": "user"
+    },
+    {
+      "id": 4,
+      "username": "user2",
+      "email": "user2@example.com",
+      "password": "$2a$10$86J1Nozk73XJTYHMRTtBdeDPnKxQWdYLCW.X5rffhKSfwEbsKdRG2",
+      "image": "https://i.pravatar.cc/800",
+      "user_type": "user"
+    },
+    {
+      "email": "admin1@example.com",
+      "hashedPassword": "$2a$10$86J1Nozk73XJTYHMRTtBdeVYaIGPblWffLRIUaQ83Z/qxUZSzn84.",
+      "id": 5
+    },
+    {
+      "email": "admin1@example.com",
+      "hashedPassword": "$2a$10$86J1Nozk73XJTYHMRTtBdeCh1YNUSPnO2wQBpC3yWrBYKt7fG0UCG",
+      "id": 6
+    },
+    {
+      "email": "admin1@example.com",
+      "hashedPassword": "$2a$10$86J1Nozk73XJTYHMRTtBdeCh1YNUSPnO2wQBpC3yWrBYKt7fG0UCG",
+      "id": 7
+    },
+    {
+      "email": "admin1@example.com",
+      "hashedPassword": "$2a$10$86J1Nozk73XJTYHMRTtBdeCh1YNUSPnO2wQBpC3yWrBYKt7fG0UCG",
+      "id": 8
+    },
+    {
+      "email": "admin1@example.com",
+      "hashedPassword": "$2a$10$86J1Nozk73XJTYHMRTtBde9.LCgVkxGOZ0Ofzw5murPuM.lChccr6",
+      "id": 9
+    }
+  ]
+}

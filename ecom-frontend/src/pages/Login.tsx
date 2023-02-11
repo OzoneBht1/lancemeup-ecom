@@ -3,10 +3,11 @@ import LoginForm from "../components/LoginForm";
 import bcrypt from "bcryptjs";
 import { secret } from "../components/secret-pass";
 import { ILoginData, IUser, IUserJsonData } from "../types/types";
-import userData from "../data/dummyUsers.json";
+
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks";
 import { setUser } from "../store/slices/usersSlice";
+import { isValidCredentials } from "../api/api";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, secret);
@@ -22,10 +23,12 @@ const Login = () => {
   const formSubmissionHandler = async (data: ILoginData) => {
     const { email, password } = data;
     const hashedPassword = await hashPassword(password);
-    const user = userData.find(
-      (user: IUserJsonData) =>
-        user.email === email && user.password === hashedPassword
-    );
+    const user = await isValidCredentials<IUser>({
+      email,
+      hashedPassword,
+    });
+    console.log(user);
+
     // TODO: Dispatch action to store user data
     if (user) {
       dispatch(
