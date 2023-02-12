@@ -23,7 +23,7 @@ const Login = () => {
   const formSubmissionHandler = async (data: ILoginData) => {
     const { email, password } = data;
     const hashedPassword = await hashPassword(password);
-    const user = await isValidCredentials<IUser>({
+    const user = await isValidCredentials<IUserJsonData>({
       email,
       hashedPassword,
     });
