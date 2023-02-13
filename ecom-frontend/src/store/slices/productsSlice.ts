@@ -14,8 +14,13 @@ export const productsSlice = createSlice({
   name: "productsApi",
   initialState,
   reducers: {
-    addProduct: (state, action: PayloadAction<IProduct>) => {
-      state.products = [action.payload, ...state.products];
+    addProduct: (
+      state,
+      action: PayloadAction<{ data: IProduct; id: number }>
+    ) => {
+      const id = action.payload.id;
+
+      state.products = [...state.products, { ...action.payload.data, id: id }];
     },
     deleteProduct: (state, action: PayloadAction<number>) => {
       state.products = state.products.filter(

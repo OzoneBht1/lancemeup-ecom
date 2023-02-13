@@ -1,20 +1,29 @@
 import React from "react";
 import AddProductForm from "../components/AddProductForm";
-import { useAddProductMutation } from "../store/slices/apiSlices/productsApiSlice";
+import { useAppDispatch } from "../store/hooks";
+import { useAddProductApiMutation } from "../store/slices/apiSlices/productsApiSlice";
+import { addProduct } from "../store/slices/productsSlice";
 import { IProduct } from "../types/types";
 
 const AddProduct = () => {
+  const dispatch = useAppDispatch();
   const [messsage, setMessage] = React.useState<{
     type: "error" | "success";
     message: string;
   } | null>(null);
-  const [addProduct] = useAddProductMutation();
+  const [addProductApi] = useAddProductApiMutation();
 
   const submitHandler = async (data: IProduct) => {
-    addProduct(data)
+    addProductApi(data)
       .unwrap()
       .then((res) => {
         console.log(res);
+        const updatedData = {
+          ...data,
+          image: URL.createObjectURL(data.image as File),
+        };
+        dispatch(addProduct({ data: updatedData, id: res.id }));
+
         setMessage({
           type: "success",
           message: "Product added successfully",

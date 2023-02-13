@@ -13,6 +13,8 @@ import { setUser } from "./store/slices/usersSlice";
 import { useEffect, useState } from "react";
 import Cart from "./components/Cart";
 import { setCart } from "./store/slices/cartSlice";
+import { useGetProductsApiQuery } from "./store/slices/apiSlices/productsApiSlice";
+import { setProducts } from "./store/slices/productsSlice";
 
 function App() {
   const [userInLocalStorage, setUserInLocalStorage] = useLocalStorage<IUser>(
@@ -23,18 +25,33 @@ function App() {
     `cartItems-${userInLocalStorage?.username}`,
     []
   );
+  const { data: products, isLoading: productsIsLoading } =
+    useGetProductsApiQuery(null);
+  console.log(products);
 
   const dispatch = useAppDispatch();
-  const cartVisibility = useAppSelector((state) => state.cart.showCart);
 
-  if (userInLocalStorage && Object.keys(userInLocalStorage).length !== 0) {
-    // update state only if user is not empty
-    dispatch(setUser(userInLocalStorage));
-  }
-  if (cartInLocalStorage && Object.keys(cartInLocalStorage).length !== 0) {
-    // update state only if user is not empty
-    dispatch(setCart(cartInLocalStorage));
-  }
+  useEffect(() => {
+    if (products) {
+      dispatch(setProducts(products));
+    }
+  }, [products]);
+
+  useEffect(() => {
+    if (userInLocalStorage && Object.keys(userInLocalStorage).length !== 0) {
+      // update state only if user is not empty
+      dispatch(setUser(userInLocalStorage));
+    }
+  }, [userInLocalStorage]);
+
+  useEffect(() => {
+    if (cartInLocalStorage && Object.keys(cartInLocalStorage).length !== 0) {
+      // update state only if user is not empty
+      dispatch(setCart(cartInLocalStorage));
+    }
+  }, [cartInLocalStorage]);
+
+  const cartVisibility = useAppSelector((state) => state.cart.showCart);
 
   return (
     <BrowserRouter>

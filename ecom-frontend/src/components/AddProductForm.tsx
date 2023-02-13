@@ -3,10 +3,7 @@ import { PhotoIcon } from "@heroicons/react/24/solid";
 import UploadImage from "./UploadImage";
 import { addProduct } from "../store/slices/productsSlice";
 import { IProduct } from "../types/types";
-import {
-  useAddProductMutation,
-  useGetCategoriesQuery,
-} from "../store/slices/apiSlices/productsApiSlice";
+import { useGetCategoriesApiQuery } from "../store/slices/apiSlices/productsApiSlice";
 
 interface IAddProductForm {
   onSubmitForm: (data: IProduct) => void;
@@ -25,7 +22,7 @@ const AddProductForm = ({ onSubmitForm }: IAddProductForm) => {
     price: false,
     image: false,
   });
-  const { data: categoies, isLoading } = useGetCategoriesQuery(null);
+  const { data: categoies, isLoading } = useGetCategoriesApiQuery(null);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
