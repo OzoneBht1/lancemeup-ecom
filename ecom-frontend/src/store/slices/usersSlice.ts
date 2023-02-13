@@ -6,6 +6,8 @@ interface UserState {
   user: IUser | null;
 }
 
+// const localUser = localStorage.getItem("user");
+
 const initialState: UserState = {
   user: null,
 };

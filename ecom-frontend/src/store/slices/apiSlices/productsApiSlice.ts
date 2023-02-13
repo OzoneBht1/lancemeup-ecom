@@ -28,6 +28,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getCategories: build.query<string[], null>({
+      query: () => ({
+        url: "products/categories",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -36,4 +42,5 @@ export const {
   useGetProductsQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useGetCategoriesQuery,
 } = productsApiSlice;

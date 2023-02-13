@@ -11,6 +11,5 @@ export const isValidCredentials = async <TData>(
       user.email === credentials.email &&
       user.password === credentials.hashedPassword
   );
-  console.log(user);
   return user ? user : null;
 };

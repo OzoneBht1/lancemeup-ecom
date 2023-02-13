@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import bcrypt from "bcryptjs";
 import { secret } from "../components/secret-pass";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import LandingPageImg from "../assets/LandingPageImg.jpg";
+
+import { IUser } from "../types/types";
+import { setUser } from "../store/slices/usersSlice";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, secret);
   return hashedPassword;
 };
 const Home = () => {
-  const user = useAppSelector((state) => state.user.user);
-  console.log(user);
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center h-screen-minus-navbar  ">
       <div className="flex sm:w-full justify-center lg:w-1/2 border-r-1 h-3/4 items-center lg:justify-end bg-white text-center ">

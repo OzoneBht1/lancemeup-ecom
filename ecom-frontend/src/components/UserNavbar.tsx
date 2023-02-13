@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
 import { InboxStackIcon } from "@heroicons/react/24/solid";
 import { logout } from "../store/slices/usersSlice";
+import CartButton from "./CartButton";
 
 enum Page {
   Home = "/",
@@ -36,15 +37,15 @@ const UserNavbar = () => {
   };
 
   return (
-    <nav className="flex items-center sticky top-0 left-0 p-5 h-navbar justify-between shadow-md">
+    <nav className="flex items-center text-center sticky top-0 left-0 p-5 h-navbar justify-between shadow-md bg-white">
       <div className="flex items-center">
         <img src={AppLogo} alt="App Logo" className="h-20 w-20" />
         {navItemsToRender.map((item) => {
           return (
             <NavLink
               key={item}
-              to={Page[item as keyof typeof Page]}
-              className="text-black font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-inner"
+              to={Page[item.replace(" ", "") as keyof typeof Page]}
+              className="text-black font-bold py-3 px-6 rounded m-3 hover:shadow-inner"
             >
               {item}
             </NavLink>
@@ -53,12 +54,10 @@ const UserNavbar = () => {
       </div>
 
       {user && user.user_type === "user" && (
-        <div>
-          <button className="text-white font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-sm">
-            <ShoppingCartIcon className="h-10 w-10 text-purple-dark" />
-          </button>
+        <div className="flex items-center text-center cursor-pointer">
+          <CartButton />
           <button
-            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-sm"
+            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 hover:shadow-sm"
             onClick={logoutHandler}
           >
             Logout
@@ -68,14 +67,14 @@ const UserNavbar = () => {
 
       {user && user.user_type === "admin" && (
         <div className="flex items-center text-center">
-          <button className="text-white font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-sm">
+          <button className="text-white font-bold py-3 px-6 rounded m-3  hover:shadow-sm">
             <InboxStackIcon
               className="h-10 w-10 text-purple-dark"
               onClick={() => nav("/order-list")}
             />
           </button>
           <button
-            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-sm"
+            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 hover:shadow-sm"
             onClick={logoutHandler}
           >
             Logout

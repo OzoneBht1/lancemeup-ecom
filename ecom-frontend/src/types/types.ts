@@ -20,10 +20,14 @@ export interface ICredentials {
 }
 
 export interface IProduct {
-  id: number;
+  id?: number;
   title: string;
   price: number;
-  image: string;
+  image: File | string;
   description: string;
   category: string;
+}
+
+export interface ICart extends IProduct {
+  quantity: number;
 }
