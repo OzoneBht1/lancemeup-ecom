@@ -12,14 +12,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
     getProductsApi: build.query<IProduct[], null>({
       query: () => ({
-        url: "products?limit=10",
+        url: "products",
         method: "GET",
       }),
     }),
-    updateProductApi: build.mutation<IProduct, number>({
-      query: (id) => ({
-        url: `products/${id}`,
-        method: "GET",
+    updateProductApi: build.mutation<IProduct, IProduct>({
+      query: (data) => ({
+        url: `products/${data.id}`,
+        method: "POST",
       }),
     }),
     deleteProductApi: build.mutation<IProduct, number>({

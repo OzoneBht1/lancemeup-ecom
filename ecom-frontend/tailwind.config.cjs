@@ -10,6 +10,7 @@ module.exports = {
       height: {
         "screen-minus-navbar": "calc(100vh - 80px)",
         navbar: "80px",
+        "filter-options": "50vh",
       },
       colors: {
         "purple-light": "#b291ff",

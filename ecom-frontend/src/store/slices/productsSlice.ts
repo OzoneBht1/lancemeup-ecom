@@ -4,10 +4,12 @@ import { IProduct } from "../../types/types";
 
 interface ProductsState {
   products: IProduct[];
+  editVisible: { id: number; visibile: boolean };
 }
 
 const initialState: ProductsState = {
   products: [],
+  editVisible: { id: 0, visibile: false },
 };
 
 export const productsSlice = createSlice({
@@ -35,10 +37,21 @@ export const productsSlice = createSlice({
     setProducts: (state, action: PayloadAction<IProduct[]>) => {
       state.products = action.payload;
     },
+    setEditModalVisibility: (
+      state,
+      action: PayloadAction<{ id: number; visibile: boolean }>
+    ) => {
+      state.editVisible = action.payload;
+    },
   },
 });
 
 export default productsSlice.reducer;
 
-export const { addProduct, deleteProduct, updateProduct, setProducts } =
-  productsSlice.actions;
+export const {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+  setProducts,
+  setEditModalVisibility,
+} = productsSlice.actions;

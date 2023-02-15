@@ -11,9 +11,16 @@ import { IProduct } from "../types/types";
 interface ProductProps {
   product: IProduct;
   onAddToCart: (id: number, quantity: number) => void;
+  onDeleteProduct: (id: number) => void;
+  onEditProduct: (id: number) => void;
 }
 
-const Product = ({ product, onAddToCart }: ProductProps) => {
+const Product = ({
+  product,
+  onAddToCart,
+  onDeleteProduct,
+  onEditProduct,
+}: ProductProps) => {
   const user = useAppSelector((state) => state.user.user);
   const quantityRef = useRef<HTMLInputElement>(null);
   const nav = useNavigate();
@@ -22,6 +29,15 @@ const Product = ({ product, onAddToCart }: ProductProps) => {
     const id = product.id;
     const quantity = quantityRef.current?.value;
     onAddToCart(id!, +quantity!);
+  };
+
+  const onClickDelete = () => {
+    const id = product.id;
+    onDeleteProduct(id!);
+  };
+  const onClickEdit = () => {
+    const id = product.id;
+    onEditProduct(id!);
   };
 
   return (
@@ -57,10 +73,10 @@ const Product = ({ product, onAddToCart }: ProductProps) => {
 
         {user && user.user_type === "admin" && (
           <div className="flex items-center px-5 gap-2">
-            <button className="font-bold py-2 rounded">
+            <button onClick={onClickEdit} className="font-bold py-2 rounded">
               <PencilSquareIcon className="h-8 w-8 text-purple-md" />
             </button>
-            <button className=" font-bold py-2 rounded">
+            <button onClick={onClickDelete} className=" font-bold py-2 rounded">
               <TrashIcon className="h-8 w-8 text-red-400" />
             </button>
           </div>

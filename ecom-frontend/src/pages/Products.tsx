@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -10,42 +10,207 @@ import {
 } from "@heroicons/react/24/outline";
 import Product from "../components/Product";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { ICart } from "../types/types";
+import { ICart, IProduct } from "../types/types";
 import { addToCart } from "../store/slices/cartSlice";
+import {
+  deleteProduct,
+  setEditModalVisibility,
+} from "../store/slices/productsSlice";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
+interface PriceFilterProps {
+  onPriceChange: (value: [number, number]) => void;
+}
+
+let CATEGORIES: string[] | null = null;
 const Products = () => {
   const products = useAppSelector((state) => state.products.products);
+  const [open, setOpen] = useState(false);
   console.log(products);
 
   const username = useAppSelector((state) => state.user.user?.username);
   const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart.cart);
 
   const [cartItems, setCartItems] = useLocalStorage(
     `cartItems-${username}`,
     [] as ICart[]
   );
+  const [category, setCategory] = useState<string>("");
+
+  const [filteredProducts, setFilteredProducts] = useState<
+    IProduct[] | undefined
+  >(undefined);
+  console.log(filteredProducts);
+
+  const [value, setValue] = useState<[number, number]>([0, 1000]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  function handlePriceChange(value: any) {
+    setValue(value as [number, number]);
+    // setFilteredProducts((currProducts) =>
+    //   products?.filter(
+    //     (products) => products.price >= value[0] && products.price <= value[1]
+    //   )
+    // );
+  }
+
+  useEffect(() => {
+    setFilteredProducts(products);
+    const categoriesSet = new Set(
+      products?.map(
+        (product) =>
+          product.category.charAt(0).toUpperCase() + product.category.slice(1)
+      )
+    );
+
+    const uniqueCategories = Array.from(categoriesSet);
+    CATEGORIES = [...uniqueCategories];
+  }, [products]);
+
+  useEffect(() => {
+    console.log(category);
+    if (!!category) {
+      setFilteredProducts(
+        products.filter(
+          (product) =>
+            product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            product.category === category.toLowerCase() &&
+            product.price >= value[0] &&
+            product.price <= value[1]
+        )
+      );
+    } else {
+      setFilteredProducts(
+        products.filter(
+          (product) =>
+            product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            product.price >= value[0] &&
+            product.price <= value[1]
+        )
+      );
+    }
+  }, [products, searchTerm, value, category]);
 
   const addToCartHandler = (id: number, quantity: number) => {
     const item = products?.find((product) => product.id === id);
     if (item) {
-      const alreadyInCart = cartItems!.find((item) => item.id === id);
+      const alreadyInCart = cart!.find((item) => item.id === id);
+      console.log(alreadyInCart);
+      dispatch(addToCart({ item, quantity }));
       if (alreadyInCart) {
         setCartItems(
-          cartItems!.map((item) =>
+          cart!.map((item) =>
             item.id === id
               ? { ...alreadyInCart, quantity: item.quantity + quantity }
               : item
           )
         );
-        dispatch(addToCart({ item, quantity }));
       } else {
         setCartItems([...cartItems!, { ...item, quantity }]);
       }
     }
   };
+  const deleteHandler = (id: number) => {
+    dispatch(deleteProduct(id));
+  };
+  const editHandler = (id: number) => {
+    dispatch(setEditModalVisibility({ id, visibile: true }));
+  };
+
+  const setCategoryHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setCategory(e?.currentTarget.innerText.toLowerCase());
+    setOpen(false);
+  };
 
   return (
-    <div className="flex  justify-center">
+    <div className="flex">
+      <div className="flex w-full md:w-1/4 sticky h-52 md:h-auto top-10 md:top-20 left-0 flex-col items-center mx-2 md:mx-4 p-2 md:p-5 my-1 border-2 gap-2 ">
+        <div className="flex w-full p-2">
+          <button
+            id="dropdown-button"
+            data-dropdown-toggle="dropdown"
+            onClick={() => setOpen(!open)}
+            className="flex-shrink-0 z-10 w-2/5 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+            type="button"
+          >
+            Categories
+            <svg
+              aria-hidden="true"
+              className="w-4 h-4 ml-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          {open && (
+            <div
+              id="dropdown"
+              className="absolute z-20 w-1/4 mt-8 origin-top-left bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="dropdown-button"
+            >
+              <div className="">
+                {CATEGORIES?.map((category) => (
+                  <button
+                    key={category}
+                    onClick={setCategoryHandler}
+                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="relative w-full">
+            <input
+              type="search"
+              id="search-dropdown"
+              className="block p-2.5 w-full z-20 text-sm  text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+              placeholder="Search Title"
+              onKeyUp={(e) => {
+                setSearchTerm(e.currentTarget.value);
+              }}
+              required
+            />
+          </div>
+        </div>
+        <div className=""></div>
+        <h2 className="text-lg font-medium mb-4">Filter by Price</h2>
+        <div className="w-full">
+          <Slider
+            range
+            min={0}
+            max={1000}
+            value={value}
+            onChange={handlePriceChange}
+            railStyle={{ backgroundColor: "#CBD5E0" }}
+            trackStyle={[{ backgroundColor: "#4299E1" }]}
+            handleStyle={[
+              { backgroundColor: "#FFFFFF", border: "2px solid #4299E1" },
+              { backgroundColor: "#FFFFFF", border: "2px solid #4299E1" },
+            ]}
+          />
+        </div>
+        <div className="flex items-center justify-between w-full mt-4">
+          <span className="text-gray-500">${value[0]}</span>
+          <span className="text-gray-500">${value[1]}</span>
+        </div>
+      </div>
+
       <table className="table w-4/5 m-5 justify-center border-x-2 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -59,15 +224,24 @@ const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {products?.map((product) => {
+          {filteredProducts?.map((product) => {
             return (
               <Product
+                onEditProduct={editHandler}
+                onDeleteProduct={deleteHandler}
                 product={product}
                 key={product.id}
                 onAddToCart={addToCartHandler}
               />
             );
           })}
+          {filteredProducts?.length === 0 && (
+            <tr>
+              <td className="px-4 py-2 text-center" colSpan={7}>
+                No products found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

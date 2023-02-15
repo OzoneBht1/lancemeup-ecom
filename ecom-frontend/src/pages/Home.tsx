@@ -6,12 +6,14 @@ import LandingPageImg from "../assets/LandingPageImg.jpg";
 
 import { IUser } from "../types/types";
 import { setUser } from "../store/slices/usersSlice";
+import { useNavigate } from "react-router-dom";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, secret);
   return hashedPassword;
 };
 const Home = () => {
+  const nav = useNavigate();
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center h-screen-minus-navbar  ">
       <div className="flex sm:w-full justify-center lg:w-1/2 border-r-1 h-3/4 items-center lg:justify-end bg-white text-center ">
@@ -21,7 +23,10 @@ const Home = () => {
             <br />
             <span className="text-gray-500 text-4xl">Keep the memories.</span>
           </h1>
-          <button className="bg-purple-md text-white font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-lg">
+          <button
+            onClick={() => nav("/products")}
+            className="bg-purple-md text-white font-bold py-3 px-6 rounded m-3 mt-5 hover:shadow-lg"
+          >
             Shop Now
           </button>
           <a href="https://github.com/OzoneBht1" target="_blank">

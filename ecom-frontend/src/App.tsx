@@ -15,6 +15,7 @@ import Cart from "./components/Cart";
 import { setCart } from "./store/slices/cartSlice";
 import { useGetProductsApiQuery } from "./store/slices/apiSlices/productsApiSlice";
 import { setProducts } from "./store/slices/productsSlice";
+import EditProduct from "./components/EditProduct";
 
 function App() {
   const [userInLocalStorage, setUserInLocalStorage] = useLocalStorage<IUser>(
@@ -52,11 +53,15 @@ function App() {
   }, [cartInLocalStorage]);
 
   const cartVisibility = useAppSelector((state) => state.cart.showCart);
+  const editModalVisibility = useAppSelector(
+    (state) => state.products.editVisible
+  );
 
   return (
     <BrowserRouter>
       <div className="App">
         {cartVisibility && <Cart />}
+        {editModalVisibility.visibile && <EditProduct />}
         <UserNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
