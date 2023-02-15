@@ -14,44 +14,50 @@ const Cart = () => {
 
   return (
     <Modal>
-      <table className="table-auto w-full mx-3 my-5">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((item) => (
-            <tr key={item.id}>
-              <td>{item.title}</td>
-              <td>${item.price.toFixed(2)}</td>
-              <td>{item.quantity}</td>
-              <td>${(item.price * item.quantity).toFixed(2)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex justify-end m-2">
-        <div className="flex flex-col">
-          <span className="text-xl font-bold">
-            Total: $
-            {cartItems
-              .reduce((acc, item) => {
-                return acc + item.price * item.quantity;
-              }, 0)
-              .toFixed(2)}
-          </span>
-          <button
-            className="bg-purple-500 text-white px-4 py-2 rounded mt-2"
-            onClick={toggleCart}
-          >
-            Checkout
-          </button>
-        </div>
-      </div>
+      {cartItems.length === 0 ? (
+        <p className="w-1/5 m-auto">There's nothing to show</p>
+      ) : (
+        <>
+          <table className="table-auto w-full mx-3 my-5">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.title}</td>
+                  <td>${item.price.toFixed(2)}</td>
+                  <td>{item.quantity}</td>
+                  <td>${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-end m-2">
+            <div className="flex flex-col">
+              <span className="text-xl font-bold">
+                Total: $
+                {cartItems
+                  .reduce((acc, item) => {
+                    return acc + item.price * item.quantity;
+                  }, 0)
+                  .toFixed(2)}
+              </span>
+              <button
+                className="bg-purple-500 text-white px-4 py-2 rounded mt-2"
+                onClick={toggleCart}
+              >
+                Checkout
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </Modal>
   );
 };

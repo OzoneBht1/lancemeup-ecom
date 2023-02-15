@@ -16,6 +16,7 @@ import { setCart } from "./store/slices/cartSlice";
 import { useGetProductsApiQuery } from "./store/slices/apiSlices/productsApiSlice";
 import { setProducts } from "./store/slices/productsSlice";
 import EditProduct from "./components/EditProduct";
+import Orders from "./pages/Orders";
 
 function App() {
   const [userInLocalStorage, setUserInLocalStorage] = useLocalStorage<IUser>(
@@ -68,6 +69,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/products" element={<Products />} />
           <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/order-list" element={<Orders />} />
         </Routes>
       </div>
     </BrowserRouter>
