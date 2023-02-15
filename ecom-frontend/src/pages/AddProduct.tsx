@@ -38,7 +38,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen-minus-navbar bg-gray-200 relative">
+    <div className="flex flex-col items-center justify-center h-screen-minus-navbar relative">
       <AddProductForm onSubmitForm={submitHandler} />
       {!!messsage && (
         <div

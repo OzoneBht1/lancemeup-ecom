@@ -50,7 +50,7 @@ const Product = ({
               ? product.image
               : URL.createObjectURL(product.image)
           }
-          className="w-20 h-20"
+          className="w-14"
           alt=""
         />
       </td>
@@ -96,7 +96,7 @@ const Product = ({
             </div>
             <button
               onClick={addCartClickHandler}
-              className="font-bold py-2 rounded-full bg-purple-md w-36 h-10"
+              className="font-bold py-2 rounded-full bg-purple-md w-36 h-10 text-white"
             >
               +Add to cart
             </button>

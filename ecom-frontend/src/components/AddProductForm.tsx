@@ -56,7 +56,7 @@ const AddProductForm = ({ onSubmitForm }: IAddProductForm) => {
   };
   return (
     <form onSubmit={submitHandler}>
-      <div className="bg-white w-96 p-6  shadow-md ">
+      <div className="w-96 px-3 pt-3 pb-2">
         <div className="mb-4">
           <label htmlFor="Title" className="text-gray-700">
             Title

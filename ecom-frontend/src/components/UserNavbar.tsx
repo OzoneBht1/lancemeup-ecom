@@ -3,7 +3,10 @@ import AppLogo from "../assets/AppLogo.png";
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
-import { InboxStackIcon } from "@heroicons/react/24/solid";
+import {
+  ArchiveBoxIcon,
+  ArrowLeftOnRectangleIcon,
+} from "@heroicons/react/24/solid";
 import { logout } from "../store/slices/usersSlice";
 import CartButton from "./CartButton";
 
@@ -38,26 +41,32 @@ const UserNavbar = () => {
 
   return (
     <nav className="flex items-center text-center sticky top-0 left-0 p-5 h-navbar justify-between shadow-md bg-white">
-      <div className="flex items-center">
-        <img src={AppLogo} alt="App Logo" className="h-20 w-20" />
+      <div className="flex items-center gap-2">
+        <img src={AppLogo} alt="App Logo" className="h-14 w-14" />
+        <h1 className="text-2xl text-gray-500">
+          Shop<b className="text-purple-md">Now</b>
+        </h1>
+      </div>
+      <div>
         {navItemsToRender.map((item) => {
           return (
             <NavLink
               key={item}
               to={Page[item.replace(" ", "") as keyof typeof Page]}
-              className="text-black font-bold py-3 px-6 rounded m-3 hover:shadow-inner"
+              className="text-gray-500 font-bold py-3 px-2 rounded m-3 hover:text-purple-md"
             >
               {item}
             </NavLink>
           );
         })}
       </div>
+      {!user && <div></div>}
 
       {user && user.user_type === "user" && (
         <div className="flex items-center text-center cursor-pointer">
           <CartButton />
           <button
-            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 hover:shadow-sm"
+            className="flex items-center gap-2 text-purple-md border-2 border-purple-md font-bold py-3 px-6 rounded m-2 hover:scale-105"
             onClick={logoutHandler}
           >
             Logout
@@ -67,16 +76,18 @@ const UserNavbar = () => {
 
       {user && user.user_type === "admin" && (
         <div className="flex items-center text-center">
-          <button className="text-white font-bold py-3 px-6 rounded m-3  hover:shadow-sm">
-            <InboxStackIcon
-              className="h-10 w-10 text-purple-dark"
-              onClick={() => nav("/order-list")}
-            />
+          <button
+            onClick={() => nav("/order-list")}
+            className="flex items-center gap-2 text-white bg-purple-md font-bold py-3 px-6 rounded m-2 hover:scale-105"
+          >
+            <ArchiveBoxIcon className="h-5 w-5" />
+            Orders
           </button>
           <button
-            className="text-white bg-gray-500 font-bold py-3 px-6 rounded m-3 hover:shadow-sm"
+            className="flex items-center gap-2 text-purple-md border-2 border-purple-md font-bold py-3 px-6 rounded m-2 hover:scale-105"
             onClick={logoutHandler}
           >
+            <ArrowLeftOnRectangleIcon className="h-5 w-5" />
             Logout
           </button>
         </div>

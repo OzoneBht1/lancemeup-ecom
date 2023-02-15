@@ -41,7 +41,7 @@ const UploadImage = ({ onImageUpload, defaultImage }: UploadImageProps) => {
     <div
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      className="flex flex-col justify-between items-center text-center w-full px-3 py-8  bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+      className="flex flex-col justify-between items-center text-center w-full px-3 pt-3  bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
     >
       {!file && !currentFile && (
         <>
