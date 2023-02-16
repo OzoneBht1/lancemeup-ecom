@@ -37,10 +37,6 @@ const UserNavbar = () => {
     navItemsToRender = ["Home", "Login", "Products"];
   }
 
-  const openMenuHandler = () => {
-    setOpenMenu(true);
-  };
-
   const logoutHandler = () => {
     deleteFromLocalStorage("user");
     dispatch(logout());
@@ -74,33 +70,36 @@ const UserNavbar = () => {
         })}
       </div>
       {!user && (
-        <div
-          onClick={() => setOpenMenu((curr) => !curr)}
-          className="sm:block md:hidden cursor-pointer"
-        >
-          <div className="space-y-2">
-            <div className="w-8 h-0.5 bg-gray-600"></div>
-            <div className="w-8 h-0.5 bg-gray-600"></div>
-            <div className="w-8 h-0.5 bg-gray-600"></div>
-          </div>
-          {openMenu && (
-            <div className="absolute z-50 top-0 right-0 mt-16 mr-5 bg-white rounded-md shadow-md ">
-              <div className="flex flex-col items-center gap-2 p-5 ">
-                {navItemsToRender.map((item) => {
-                  return (
-                    <NavLink
-                      key={item}
-                      to={Page[item.replace(" ", "") as keyof typeof Page]}
-                      className={({ isActive }) => (isActive ? "" : "")}
-                    >
-                      {item}
-                    </NavLink>
-                  );
-                })}
-              </div>
+        <>
+          <div></div>
+          <div
+            onClick={() => setOpenMenu((curr) => !curr)}
+            className="sm:block md:hidden cursor-pointer"
+          >
+            <div className="space-y-2">
+              <div className="w-8 h-0.5 bg-gray-600"></div>
+              <div className="w-8 h-0.5 bg-gray-600"></div>
+              <div className="w-8 h-0.5 bg-gray-600"></div>
             </div>
-          )}
-        </div>
+            {openMenu && (
+              <div className="absolute z-50 top-0 right-0 mt-16 mr-5 bg-white rounded-md shadow-md ">
+                <div className="flex flex-col items-center gap-2 p-5 ">
+                  {navItemsToRender.map((item) => {
+                    return (
+                      <NavLink
+                        key={item}
+                        to={Page[item.replace(" ", "") as keyof typeof Page]}
+                        className={({ isActive }) => (isActive ? "" : "")}
+                      >
+                        {item}
+                      </NavLink>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </>
       )}
 
       {user && user.user_type === "user" && (
