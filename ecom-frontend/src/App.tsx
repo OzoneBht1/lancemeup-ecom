@@ -17,6 +17,7 @@ import { useGetProductsApiQuery } from "./store/slices/apiSlices/productsApiSlic
 import { setProducts } from "./store/slices/productsSlice";
 import EditProduct from "./components/EditProduct";
 import Orders from "./pages/Orders";
+import ProtectRoute from "./utils/ProtectRoute";
 
 function App() {
   const [userInLocalStorage, setUserInLocalStorage] = useLocalStorage<IUser>(
@@ -71,7 +72,9 @@ function App() {
             path="/products"
             element={<Products isLoading={productsIsLoading} />}
           />
-          <Route path="/add-product" element={<AddProduct />} />
+          <Route element={<ProtectRoute />}>
+            <Route path="/add-product" element={<AddProduct />} />
+          </Route>
           <Route path="/order-list" element={<Orders />} />
         </Routes>
       </div>

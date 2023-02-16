@@ -1,10 +1,9 @@
 import React from "react";
+import Modal from "./Modal";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartVisibility } from "../store/slices/cartSlice";
-import Modal from "./Modal";
 
 const Cart = () => {
-  console.log("AA");
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cart);
 

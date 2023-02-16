@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 
 type ReturnType<T> = [
   T | undefined,
-  React.Dispatch<React.SetStateAction<T | undefined>>
+  React.Dispatch<React.SetStateAction<T | undefined>>,
+  (key: string) => void
 ];
 
 export const useLocalStorage = <T>(
@@ -19,6 +20,9 @@ export const useLocalStorage = <T>(
       return initialValue;
     }
   });
+  const removeFromLocalStorage = (key: string) => {
+    localStorage.removeItem(key);
+  };
 
   useEffect(() => {
     if (state) {
@@ -30,5 +34,5 @@ export const useLocalStorage = <T>(
     }
   }, [state]);
 
-  return [state, setState];
+  return [state, setState, removeFromLocalStorage];
 };

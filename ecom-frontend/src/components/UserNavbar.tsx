@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { logout } from "../store/slices/usersSlice";
 import CartButton from "./CartButton";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 enum Page {
   Home = "/",
@@ -23,6 +24,8 @@ const UserNavbar = () => {
   const nav = useNavigate();
   const dispatch = useAppDispatch();
   let navItemsToRender: string[];
+  const [userInLocalStorage, setUserInLocalStorage, deleteFromLocalStorage] =
+    useLocalStorage("user", {});
 
   if (user) {
     if (user.user_type === "admin") {
@@ -35,6 +38,7 @@ const UserNavbar = () => {
   }
 
   const logoutHandler = () => {
+    deleteFromLocalStorage("user");
     dispatch(logout());
     nav("/", { replace: true });
   };
