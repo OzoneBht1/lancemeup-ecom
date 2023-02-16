@@ -1,9 +1,9 @@
+import React, { useRef } from "react";
 import {
   PencilSquareIcon,
   ShoppingCartIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import { IProduct } from "../types/types";

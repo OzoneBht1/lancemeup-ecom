@@ -1,6 +1,5 @@
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
-import { createAction } from "@reduxjs/toolkit";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartVisibility } from "../store/slices/cartSlice";

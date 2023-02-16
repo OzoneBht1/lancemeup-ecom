@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useAppDispatch } from "../store/hooks";
 import { toggleCartVisibility } from "../store/slices/cartSlice";
 import { setEditModalVisibility } from "../store/slices/productsSlice";
@@ -34,7 +33,6 @@ interface modalProps {
 }
 
 const Modal = ({ children }: modalProps) => {
-  console.log("rendering");
   const portalElement = document.getElementById("overlays") as HTMLElement;
   return (
     <>

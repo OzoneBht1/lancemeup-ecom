@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
-import bcrypt from "bcryptjs";
-import { secret } from "../components/secret-pass";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import LandingPageImg from "../assets/LandingPageImg.jpg";
+import bcrypt from "bcryptjs";
 
-import { IUser } from "../types/types";
-import { setUser } from "../store/slices/usersSlice";
+import { secret } from "../components/secret-pass";
 import { useNavigate } from "react-router-dom";
 
-const hashPassword = async (password: string) => {
-  const hashedPassword = await bcrypt.hash(password, secret);
-  return hashedPassword;
-};
+// this function was used to create the hashed password for users
+// const hashPassword = async (password: string) => {
+//   const hashedPassword = await bcrypt.hash(password, secret);
+//   return hashedPassword;
+// };
 const Home = () => {
   const nav = useNavigate();
   return (

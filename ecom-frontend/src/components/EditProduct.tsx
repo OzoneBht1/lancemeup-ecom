@@ -1,12 +1,10 @@
 import React from "react";
-import AddProduct from "../pages/AddProduct";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { updateProduct } from "../store/slices/productsSlice";
-import { IProduct } from "../types/types";
-import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
 import Modal from "./Modal";
 import { useUpdateProductApiMutation } from "../store/slices/apiSlices/productsApiSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { updateProduct } from "../store/slices/productsSlice";
+import { IProduct } from "../types/types";
 
 const EditProduct = () => {
   const { id } = useAppSelector((state) => state.products.editVisible);

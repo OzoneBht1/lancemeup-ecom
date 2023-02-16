@@ -24,10 +24,7 @@ const cartSlice = createSlice({
     ) => {
       const { id } = action.payload.item;
       const { quantity } = action.payload;
-      console.log("id", id);
-      console.log("quantity", quantity);
       const alreadyInCart = state.cart.find((item) => item.id === id);
-      console.log(alreadyInCart);
       if (alreadyInCart) {
         state.cart = state.cart.map((item) =>
           item.id === id
@@ -37,7 +34,6 @@ const cartSlice = createSlice({
       } else {
         state.cart = [...state.cart, { ...action.payload.item, quantity }];
       }
-      console.log("state.cart", state.cart);
     },
     setCart: (state, action: PayloadAction<ICart[]>) => {
       state.cart = action.payload;

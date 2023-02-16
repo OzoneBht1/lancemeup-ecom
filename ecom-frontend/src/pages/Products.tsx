@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { useGetProductsApiQuery } from "../store/slices/apiSlices/productsApiSlice";
-import {
-  ShoppingCartIcon,
-  TrashIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
 import Product from "../components/Product";
+import LoadingSpinner from "../components/LoadingSpinner";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { ICart, IProduct } from "../types/types";
 import { addToCart } from "../store/slices/cartSlice";
@@ -16,8 +12,6 @@ import {
   deleteProduct,
   setEditModalVisibility,
 } from "../store/slices/productsSlice";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 
 interface IProductsProps {
   isLoading: boolean;
@@ -27,7 +21,6 @@ let CATEGORIES: string[] | null = null;
 const Products = ({ isLoading }: IProductsProps) => {
   const products = useAppSelector((state) => state.products.products);
   const [open, setOpen] = useState(false);
-  console.log(products);
 
   const username = useAppSelector((state) => state.user.user?.username);
   const dispatch = useAppDispatch();
@@ -42,18 +35,12 @@ const Products = ({ isLoading }: IProductsProps) => {
   const [filteredProducts, setFilteredProducts] = useState<
     IProduct[] | undefined
   >(undefined);
-  console.log(filteredProducts);
 
   const [value, setValue] = useState<[number, number]>([0, 1000]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   function handlePriceChange(value: any) {
     setValue(value as [number, number]);
-    // setFilteredProducts((currProducts) =>
-    //   products?.filter(
-    //     (products) => products.price >= value[0] && products.price <= value[1]
-    //   )
-    // );
   }
 
   useEffect(() => {
@@ -70,7 +57,6 @@ const Products = ({ isLoading }: IProductsProps) => {
   }, [products]);
 
   useEffect(() => {
-    console.log(category);
     if (!!category) {
       setFilteredProducts(
         products.filter(
@@ -97,7 +83,6 @@ const Products = ({ isLoading }: IProductsProps) => {
     const item = products?.find((product) => product.id === id);
     if (item) {
       const alreadyInCart = cart!.find((item) => item.id === id);
-      console.log(alreadyInCart);
       dispatch(addToCart({ item, quantity }));
       if (alreadyInCart) {
         setCartItems(

@@ -1,7 +1,5 @@
 import React from "react";
-import { PhotoIcon } from "@heroicons/react/24/solid";
 import UploadImage from "./UploadImage";
-import { addProduct } from "../store/slices/productsSlice";
 import { IProduct } from "../types/types";
 import { useGetCategoriesApiQuery } from "../store/slices/apiSlices/productsApiSlice";
 import { useAppSelector } from "../store/hooks";
@@ -28,13 +26,11 @@ const EditProductForm = ({ id, onEditProduct }: IEditProductForm) => {
   const products = useAppSelector((state) => state.products.products);
 
   const product = products.find((product) => product.id === id);
-  console.log(product);
 
   const { data: categoies, isLoading } = useGetCategoriesApiQuery(null);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("AA");
     let different = false;
     const titleIsValid = !!titleRef.current!.value;
     const descriptionIsValid = !!descriptionRef.current!.value;
@@ -52,13 +48,7 @@ const EditProductForm = ({ id, onEditProduct }: IEditProductForm) => {
         price: priceIsValid,
         image: imageIsValid,
       });
-      console.log(
-        titleRef?.current?.value,
-        descriptionRef?.current?.value,
-        priceRef?.current?.value,
-        image,
-        categoryRef?.current?.value
-      );
+
       return;
     }
 
@@ -78,7 +68,6 @@ const EditProductForm = ({ id, onEditProduct }: IEditProductForm) => {
       }
     }
     if (different) {
-      console.log("different");
       onEditProduct(data);
     }
   };

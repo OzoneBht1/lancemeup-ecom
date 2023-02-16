@@ -1,6 +1,5 @@
 import React from "react";
 import AppLogo from "../assets/AppLogo.png";
-import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
@@ -57,7 +56,11 @@ const UserNavbar = () => {
             <NavLink
               key={item}
               to={Page[item.replace(" ", "") as keyof typeof Page]}
-              className="text-gray-500 font-bold py-3 px-2 rounded m-3 hover:text-purple-md"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-purple-md font-bold py-3 px-2 rounded m-3 hover:text-purple-md"
+                  : "text-gray-500 font-bold py-3 px-2 rounded m-3 hover:text-purple-md"
+              }
             >
               {item}
             </NavLink>

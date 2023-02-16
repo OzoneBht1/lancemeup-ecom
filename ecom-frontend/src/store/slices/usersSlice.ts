@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "..";
 import { IUser } from "../../types/types";
 
 interface UserState {
   user: IUser | null;
 }
-
-// const localUser = localStorage.getItem("user");
 
 const initialState: UserState = {
   user: null,

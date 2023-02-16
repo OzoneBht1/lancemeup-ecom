@@ -1,7 +1,5 @@
 import React from "react";
 import UploadImage from "./UploadImage";
-import { PhotoIcon } from "@heroicons/react/24/solid";
-import { addProduct } from "../store/slices/productsSlice";
 import { IProduct } from "../types/types";
 import { useGetCategoriesApiQuery } from "../store/slices/apiSlices/productsApiSlice";
 

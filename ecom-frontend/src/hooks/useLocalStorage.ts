@@ -13,7 +13,6 @@ export const useLocalStorage = <T>(
   const [state, setState] = useState<T | undefined>(() => {
     try {
       const value = localStorage.getItem(key);
-      console.log(value);
       return value ? JSON.parse(value) : initialValue;
     } catch (e) {
       console.log(e);

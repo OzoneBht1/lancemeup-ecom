@@ -13,12 +13,10 @@ const LoginForm = ({
   error,
   resetSubmissionError,
 }: ILoginForm) => {
-  console.log(error);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
-  // state for managing interactivity of password input
 
   useEffect(() => {
     if (password.length > 0 && password.length < 6) {
@@ -38,7 +36,6 @@ const LoginForm = ({
 
   const setFormToValid = () => {
     resetSubmissionError();
-    console.log("CALLING");
     setFormValidity({
       email: true,
       password: true,
@@ -50,7 +47,6 @@ const LoginForm = ({
 
     const emailIsValid = !!email && email!.includes("@");
     const passwordIsValid = !!password && password!.trim().length > 6;
-    console.log(passwordIsValid);
 
     if (!emailIsValid || !passwordIsValid) {
       setFormValidity({

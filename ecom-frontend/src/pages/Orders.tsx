@@ -1,9 +1,7 @@
 import React from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useAppSelector } from "../store/hooks";
 
 const Orders = () => {
-  const orders = useAppSelector((state) => state.cart.cart);
   const items = { ...localStorage };
   const users: string[] = [];
   const products: any[] = [];

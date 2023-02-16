@@ -1,5 +1,6 @@
 import React from "react";
 import AddProductForm from "../components/AddProductForm";
+
 import { useAppDispatch } from "../store/hooks";
 import { useAddProductApiMutation } from "../store/slices/apiSlices/productsApiSlice";
 import { addProduct } from "../store/slices/productsSlice";
@@ -17,7 +18,6 @@ const AddProduct = () => {
     addProductApi(data)
       .unwrap()
       .then((res) => {
-        console.log(res);
         const updatedData = {
           ...data,
           image: URL.createObjectURL(data.image as File),

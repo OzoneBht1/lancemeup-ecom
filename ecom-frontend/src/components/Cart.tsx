@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
+
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartVisibility } from "../store/slices/cartSlice";
 

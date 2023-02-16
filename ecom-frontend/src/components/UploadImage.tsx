@@ -45,7 +45,6 @@ const UploadImage = ({ onImageUpload, defaultImage }: UploadImageProps) => {
     >
       {!file && !currentFile && (
         <>
-          {console.log(file, currentFile)}
           <PhotoIcon className="w-12 h-8 text-gray-400" />
           <p className="text-gray-400">Upload a file or drag and drop</p>
           <p className="text-gray-400">PNG, JPG, GIF up to 10MB</p>

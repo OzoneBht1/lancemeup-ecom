@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import LoginForm from "../components/LoginForm";
 import bcrypt from "bcryptjs";
+
 import { secret } from "../components/secret-pass";
 import { ILoginData, IUser, IUserJsonData } from "../types/types";
-
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setUser } from "../store/slices/usersSlice";
@@ -12,7 +12,6 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, secret);
-  console.log(hashedPassword);
   return hashedPassword;
 };
 
@@ -59,7 +58,6 @@ const Login = () => {
         throw new Error("Invalid credentials");
       }
     } catch (err) {
-      console.log(err, typeof err);
       if (err instanceof Error && err.message === "Invalid credentials") {
         setError(err.message);
       } else if (err instanceof TypeError) {
