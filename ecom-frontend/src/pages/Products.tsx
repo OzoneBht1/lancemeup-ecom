@@ -117,7 +117,7 @@ const Products = ({ isLoading }: IProductsProps) => {
         <LoadingSpinner />
       ) : (
         <>
-          <div className="flex w-full justify-between bg-white sticky h-52 md:h-auto top-10 md:top-20 left-0 items-center mx-2 md:mx-4 p-2 md:p-5 border-2 gap-2 ">
+          <div className="flex w-full z-30 justify-between bg-white sticky h-52 md:h-auto top-10 md:top-20 left-0 items-center mx-2 md:mx-4 p-2 md:p-5 border-2 gap-2 ">
             <div className="flex w-3/5 p-2">
               <button
                 id="dropdown-button"
@@ -126,7 +126,7 @@ const Products = ({ isLoading }: IProductsProps) => {
                 className=" justify-between z-10 w-1/6 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none "
                 type="button"
               >
-                Categories
+                <p className="hidden lg:block">Categories</p>
                 <svg
                   aria-hidden="true"
                   className="w-4 h-4 ml-1"
@@ -137,7 +137,7 @@ const Products = ({ isLoading }: IProductsProps) => {
                   <path
                     fillRule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
               </button>

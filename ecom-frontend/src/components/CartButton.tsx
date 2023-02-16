@@ -6,7 +6,6 @@ import { toggleCartVisibility } from "../store/slices/cartSlice";
 
 let itemsCount = 0;
 const CartButton = () => {
-  const [showCart, setShowCart] = useLocalStorage<boolean>("showCart", false);
   const [btnIsHighlighted, setBtnIsHighlighted] = useState<boolean>(false);
   const cartItems = useAppSelector((state) => state.cart.cart);
   const divClass =
@@ -37,8 +36,10 @@ const CartButton = () => {
       className={btnIsHighlighted ? scaleClass : divClass}
     >
       <ShoppingCartIcon className="h-4 w-4 hover:cursor-pointer text-white" />
-      <label className="text-white hover:cursor-pointer  text-lg">Cart</label>
-      <label className="text-white hover:cursor-pointer  text-lg px-4 py-0 rounded-full bg-purple-500 ">
+      <label className="text-white hover:cursor-pointer  text-lg hidden md:block">
+        Cart
+      </label>
+      <label className="text-white hover:cursor-pointer  text-lg px-4 py-0 rounded-full bg-purple-500 hidden md:block">
         {itemsCount}
       </label>
     </div>
